@@ -25,7 +25,9 @@ jobs:
           result="failure"
           git status
           make version-table
-          git diff --ignore-submodules=all --exit-code && result="success"
+          if git diff --ignore-submodules=all --exit-code ; then
+            result="success"
+          fi
           echo "result=$result" >> "$GITHUB_OUTPUT"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
