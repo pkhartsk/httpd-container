@@ -5,6 +5,10 @@ on:
 jobs:
   check-readme:
     runs-on: ubuntu-latest
+    if: |
+      github.event.issue.pull_request
+      && (contains(github.event.comment.body, '[test]') || contains(github.event.comment.body, '[test-all]'))
+      && contains(fromJson('["OWNER", "MEMBER"]'), github.event.comment.author_association)
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
@@ -22,13 +26,6 @@ jobs:
           git status
           make version-table
           git diff --ignore-submodules=all --exit-code && result="success"
-          if [[ "$result" == "failure" ]]; then
-            echo "Incorrect version table in README.md"
-            echo "Please re-generate it with:"
-            echo "'make version-table'"
-            echo "Note that you need to have 'python' and 'python-natsort' installed"
-            exit 1
-          fi
           echo "result=$result" >> "$GITHUB_OUTPUT"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
@@ -39,6 +36,18 @@ jobs:
           context: "README table check"
           sha: ${{ steps.check.outputs.sha }}
 
+      - name: Exit on ERR
+        shell: bash
+        run: |
+          _result=${{ steps.check.outputs.result }}
+          if [[ "$result" == "failure" ]]; then
+            echo "Incorrect version table in README.md"
+            echo "Please re-generate it with:"
+            echo "'make version-table'"
+            echo "Note that you need to have 'python' and 'python-natsort' installed"
+            exit 1
+          fi
+  
   container-tests:
     needs: check-readme
     name: "Container tests: ${{ matrix.version }} - ${{ matrix.os_test }}"
