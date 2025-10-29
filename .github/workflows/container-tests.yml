@@ -42,7 +42,7 @@ jobs:
         shell: bash
         run: |
           _result=${{ steps.check.outputs.result }}
-          if [[ "$result" == "failure" ]]; then
+          if [[ "$_result" == "failure" ]]; then
             echo "Incorrect version table in README.md"
             echo "Please re-generate it with:"
             echo "'make version-table'"
