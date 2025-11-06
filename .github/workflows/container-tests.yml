@@ -4,8 +4,8 @@ on:
       - created
 jobs:
   check-readme:
-  runs-on: ubuntu-latest
-  steps:
+    runs-on: ubuntu-latest
+    steps:
     - uses: pkhartsk/.github/workflows/check-readme.yml@main
   
   container-tests:
