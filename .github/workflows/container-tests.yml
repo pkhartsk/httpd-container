@@ -7,3 +7,4 @@ jobs:
     uses: "pkhartsk/.github/.github/workflows/container-tests.yml@main"
     with:
       version: "['2.4', '2.4-micro']"
+    secrets: inherit
