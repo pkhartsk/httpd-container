@@ -4,7 +4,7 @@ on:
       - created
 jobs:
   check-readme:
-    uses: "pkhartsk/.github/workflows/check-readme.yml@main"
+    uses: "pkhartsk/.github/.github/workflows/check-readme.yml@main"
   
   container-tests:
     needs: check-readme
