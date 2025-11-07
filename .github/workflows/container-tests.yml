@@ -6,5 +6,6 @@ jobs:
   container-tests:
     uses: "pkhartsk/.github/.github/workflows/container-tests.yml@main"
     with:
-      version: "['2.4', '2.4-micro']"
+      versions: "['2.4', '2.4-micro']"
+      openshift-versions: "['2.4']"
     secrets: inherit
