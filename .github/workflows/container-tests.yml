@@ -8,3 +8,4 @@ jobs:
     with:
       versions: "['2.4', '2.4-micro']"
       openshift-versions: "['2.4']"
+    secrets: inherit
